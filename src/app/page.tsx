@@ -1,10 +1,11 @@
 'use client'
 
-import useProducts from '@/hooks/useProducts'
+import { Box } from '@mui/joy'
+import Grid from '@mui/material/Grid'
 import Header from '@/components/Header'
 import ProductCard from '@/components/ProductCard'
-import Grid from '@mui/material/Grid'
-import { Box } from '@mui/joy'
+import useProducts from '@/hooks/useProducts'
+import { useTheme } from '@/contexts/themeContext'
 
 export default function Home() {
   const { products, isFetching, error } = useProducts({
