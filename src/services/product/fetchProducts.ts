@@ -10,8 +10,20 @@ export interface Product {
   category: string
 }
 
-export default async function fetchProducts(): Promise<Product[]> {
-  const response = await axiosInstance('/products')
+export interface ProductQueryParams {
+  productsPerPage?: number
+  page?: number
+}
 
+export default async function fetchProducts({
+  productsPerPage,
+  page,
+}: ProductQueryParams = {}): Promise<Product[]> {
+  const response = await axiosInstance.get('/products', {
+    params: {
+      pageSize: productsPerPage,
+      pageNumber: page,
+    },
+  })
   return response.data
 }

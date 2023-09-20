@@ -1,14 +1,19 @@
-import fetchProducts from '@/services/product/fetchProducts'
+import fetchProducts, {
+  ProductQueryParams,
+} from '@/services/product/fetchProducts'
 import { useQuery } from '@tanstack/react-query'
 
-export default function useProducts() {
+export default function useProducts({
+  productsPerPage,
+  page,
+}: ProductQueryParams = {}) {
   const {
     data: products,
     isFetching,
     error,
   } = useQuery({
     queryKey: ['products'],
-    queryFn: fetchProducts,
+    queryFn: () => fetchProducts({ productsPerPage, page }),
   })
 
   return { products, isFetching, error }

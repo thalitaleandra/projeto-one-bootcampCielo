@@ -3,9 +3,14 @@
 import useProducts from '@/hooks/useProducts'
 import Header from '@/components/Header'
 import ProductCard from '@/components/ProductCard'
+import Grid from '@mui/material/Grid'
+import { Box } from '@mui/joy'
 
 export default function Home() {
-  const { products, isFetching, error } = useProducts()
+  const { products, isFetching, error } = useProducts({
+    productsPerPage: 15,
+    page: 1,
+  })
   if (error) {
     console.error(error)
   }
@@ -17,19 +22,21 @@ export default function Home() {
   return (
     <main>
       <Header />
-
-      {products
-        ?.filter((prod, index) => index < 5)
-        .map((product, index) => (
-          <ProductCard
-            name={product.name}
-            image={product.avatar}
-            category={product.category}
-            price={product.price}
-            rating={product.rating}
-            key={index}
-          />
-        ))}
+      <Box sx={{ flexGrow: 1, marginTop: 5 }}>
+        <Grid container spacing={4} justifyContent="center">
+          {products?.map((product, index) => (
+            <Grid item key={index}>
+              <ProductCard
+                name={product.name}
+                image={product.avatar}
+                category={product.category}
+                price={product.price}
+                rating={product.rating}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </main>
   )
 }
