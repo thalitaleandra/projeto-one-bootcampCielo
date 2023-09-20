@@ -2,6 +2,7 @@
 
 import useProducts from '@/hooks/useProducts'
 import Header from '@/components/Header'
+import { CartContextProvider } from '@/contexts/cartContext'
 import { Box } from '@mui/material'
 
 export default function Home() {
@@ -16,14 +17,16 @@ export default function Home() {
 
   return (
     <main>
-      <Header />
+      <CartContextProvider>
+        <Header />
 
-      {products?.map((product, index) => (
-        <Box sx={{ marginBottom: 5, marginTop: 5 }} key={index}>
-          <h2>{product.name}</h2>
-          <p>R$ {product.price}</p>
-        </Box>
-      ))}
+        {products?.map((product, index) => (
+          <Box sx={{ marginBottom: 5, marginTop: 5 }} key={index}>
+            <h2>{product.name}</h2>
+            <p>R$ {product.price}</p>
+          </Box>
+        ))}
+      </CartContextProvider>
     </main>
   )
 }
