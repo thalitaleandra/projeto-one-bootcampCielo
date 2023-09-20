@@ -2,7 +2,7 @@
 
 import useProducts from '@/hooks/useProducts'
 import Header from '@/components/Header'
-import { Box } from '@mui/material'
+import ProductCard from '@/components/ProductCard'
 
 export default function Home() {
   const { products, isFetching, error } = useProducts()
@@ -18,12 +18,18 @@ export default function Home() {
     <main>
       <Header />
 
-      {products?.map((product, index) => (
-        <Box sx={{ marginBottom: 5, marginTop: 5 }} key={index}>
-          <h2>{product.name}</h2>
-          <p>R$ {product.price}</p>
-        </Box>
-      ))}
+      {products
+        ?.filter((prod, index) => index < 5)
+        .map((product, index) => (
+          <ProductCard
+            name={product.name}
+            image={product.avatar}
+            category={product.category}
+            price={product.price}
+            rating={product.rating}
+            key={index}
+          />
+        ))}
     </main>
   )
 }
