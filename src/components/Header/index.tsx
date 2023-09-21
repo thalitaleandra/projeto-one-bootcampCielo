@@ -59,34 +59,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }))
+interface Props {
+  onInputChange: (text: string) => void
+}
 
-export default function Header() {
+export default function Header({ onInputChange }: Props) {
   const { cartQuantity } = useCart()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
 
-  const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null)
   }
 
-  const handleMenuClose = () => {
-    setAnchorEl(null)
-    handleMobileMenuClose()
-  }
-
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget)
   }
-
-  const menuId = 'primary-search-account-menu'
 
   const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
@@ -106,14 +97,6 @@ export default function Header() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -125,20 +108,15 @@ export default function Header() {
         </IconButton>
         <p>{cartQuantity}</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
     </Menu>
   )
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const timeoutId = setTimeout(() => {
+      onInputChange(event.target.value)
+    }, 1000)
+    return () => clearTimeout(timeoutId)
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -159,6 +137,7 @@ export default function Header() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleInput}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
