@@ -10,16 +10,14 @@ import useProducts from '@/hooks/useProducts'
 import { useState } from 'react'
 
 export default function Home() {
+  const [text, setText] = useState('')
   const { products, isFetching, error } = useProducts({
     productsPerPage: 15,
     page: 1,
   })
-  /*   if (error) {
+  if (error) {
     console.error(error)
-  } */
-
-  const [text, setText] = useState('')
-  console.log('🚀 ~ file: page.tsx:22 ~ Home ~ text:', text)
+  }
   const handleInputChange = (value: string) => {
     setText(value)
   }
