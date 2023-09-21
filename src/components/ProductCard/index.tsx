@@ -16,7 +16,7 @@ import useCart from '@/hooks/useCart'
 interface IProductCard {
   id: number
   name: string
-  image: string
+  avatar: string
   price: number
   rating: number
   category: string
@@ -61,7 +61,7 @@ export default function ProductCard({ itemCard }: itemProps) {
           <Box sx={{ position: 'relative', height: '200px' }}>
             <Image
               alt={`Representação do produto ${itemCard.name}`}
-              src={itemCard.image}
+              src={itemCard.avatar}
               fill
               sizes="(min-width: 808px) 50vw, 100vw"
               style={{
