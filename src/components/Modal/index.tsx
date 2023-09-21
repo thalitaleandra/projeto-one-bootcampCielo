@@ -44,7 +44,7 @@ export default function ResponsiveDialog({
           </IconButton>
         </Toolbar>
         <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
+          {"Ada Card Shop"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>

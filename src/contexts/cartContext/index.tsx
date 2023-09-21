@@ -4,7 +4,7 @@ import { produce } from 'immer'
 export interface CartItem {
   id: number
   name: string
-  image: string
+  avatar: string
   price: number
   rating: number
   category: string
