@@ -1,11 +1,10 @@
 'use client'
 
-import { Box } from '@mui/joy'
-import Grid from '@mui/material/Grid'
+import { Box, Grid } from '@mui/material'
 import Header from '@/components/Header'
 import ProductCard from '@/components/ProductCard'
 import useProducts from '@/hooks/useProducts'
-import { useTheme } from '@/contexts/themeContext'
+import Pagination from '@/components/Pagination'
 
 export default function Home() {
   const { products, isFetching, error } = useProducts({
@@ -16,27 +15,44 @@ export default function Home() {
     console.error(error)
   }
 
-  if (isFetching && !products) {
-    return <h4>buscando produtos, por favor aguarde....</h4>
-  }
-
   return (
     <main>
       <Header />
-      <Box sx={{ flexGrow: 1, marginTop: 5 }}>
-        <Grid container spacing={4} justifyContent="center">
-          {products?.map((product, index) => (
-            <Grid item key={index}>
-              <ProductCard
-                name={product.name}
-                image={product.avatar}
-                category={product.category}
-                price={product.price}
-                rating={product.rating}
-              />
-            </Grid>
-          ))}
-        </Grid>
+
+      <Box display={'flex'} mt={5}>
+        <Box component={'aside'}>barra lateral para filtros...</Box>
+
+        <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
+          {isFetching && !products ? (
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+            >
+              <h4>buscando produtos, por favor aguarde...</h4>
+            </Box>
+          ) : null}
+          <Grid
+            container
+            rowSpacing={3}
+            columnSpacing={4}
+            justifyContent="center"
+          >
+            {products?.map((product, index) => (
+              <Grid item key={index}>
+                <ProductCard
+                  name={product.name}
+                  image={product.avatar}
+                  category={product.category}
+                  price={product.price}
+                  rating={product.rating}
+                />
+              </Grid>
+            ))}
+          </Grid>
+
+          <Pagination />
+        </Box>
       </Box>
     </main>
   )

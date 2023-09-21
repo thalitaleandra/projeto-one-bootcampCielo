@@ -1,14 +1,12 @@
 import {
+  Box,
+  Rating,
   Card,
   Typography,
-  Link,
-  CardOverflow,
   CardContent,
-  Button,
-  AspectRatio,
-} from '@mui/joy'
-import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward'
-import { Box, Rating } from '@mui/material'
+  CardActionArea,
+  Chip,
+} from '@mui/material'
 import Image from 'next/image'
 
 interface IProductCard {
@@ -29,34 +27,49 @@ export default function ProductCard({
   const addToCart = () => {
     console.log('item added to cart')
   }
-
   return (
-    <Card sx={{ width: 320, maxWidth: '100%', boxShadow: 'lg' }}>
-      <CardOverflow>
-        <AspectRatio sx={{ minWidth: 200 }}>
+    <Card
+      sx={{ width: 300, boxShadow: 'lg', borderRadius: 5 }}
+      style={{
+        boxShadow:
+          'box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;',
+      }}
+    >
+      <CardActionArea onClick={addToCart}>
+        <Box sx={{ position: 'relative', height: '200px' }}>
           <Image
-            src={image}
-            layout="fill"
             alt={`Representação do produto ${name}`}
+            src={image}
+            fill
+            sizes="(min-width: 808px) 50vw, 100vw"
+            style={{
+              objectFit: 'cover',
+            }}
           />
-        </AspectRatio>
-      </CardOverflow>
-      <CardContent>
-        <Typography level="body-xs">Produto em {category}</Typography>
-        <Link
-          href="#product-card"
-          fontWeight="md"
-          color="neutral"
-          textColor="text.primary"
-          overlay
-          endDecorator={<ArrowOutwardIcon />}
-        >
-          {name}
-        </Link>
+        </Box>
 
-        <Typography
-          level="body-sm"
-          endDecorator={
+        <CardContent sx={{ height: '200px' }}>
+          <Chip
+            label={category.toLowerCase()}
+            color="info"
+            size="small"
+            sx={{ opacity: '0.8', fontSize: '0.8em' }}
+          />
+          <Typography sx={{ fontWeight: 500 }} variant="h6" component="h5">
+            {name}
+          </Typography>
+
+          <Box
+            mt={1}
+            display={'flex'}
+            flexDirection={'row'}
+            alignItems={'center'}
+            gap={1}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {rating}
+            </Typography>
+
             <Rating
               name="read-only"
               value={rating}
@@ -64,23 +77,27 @@ export default function ProductCard({
               precision={0.1}
               size="small"
             />
-          }
-        >
-          {rating}
-        </Typography>
+          </Box>
 
-        <Box sx={{ display: 'flex', gap: '5px', alignItems: 'baseline' }}>
-          <Typography level="h3" sx={{ mt: 1, fontWeight: 'xl' }}>
-            R$ {price}
-          </Typography>
-          <Typography level="body-sm">à vista</Typography>
-        </Box>
-      </CardContent>
-      <CardOverflow>
-        <Button variant="solid" size="lg" onClick={addToCart}>
-          Add to cart
-        </Button>
-      </CardOverflow>
+          <Box
+            mt={1}
+            display={'flex'}
+            flexDirection={'row'}
+            alignItems={'baseline'}
+            gap={1}
+          >
+            <Typography
+              variant="h5"
+              color="text.primary"
+              sx={{ fontWeight: 700 }}
+            >
+              R$ {price}
+            </Typography>
+
+            <Typography>à vista</Typography>
+          </Box>
+        </CardContent>
+      </CardActionArea>
     </Card>
   )
 }
