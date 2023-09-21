@@ -20,20 +20,24 @@ export default function Home() {
       <Header />
 
       <Box display={'flex'} mt={5}>
-
-        <Box component={'aside'}>
-          barra lateral para filtros...
-        </Box>
+        <Box component={'aside'}>barra lateral para filtros...</Box>
 
         <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
-          {
-            isFetching && !products ? (
-              <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                <h4>buscando produtos, por favor aguarde...</h4>
-              </Box>
-            ) : null
-          }
-          <Grid container rowSpacing={3} columnSpacing={4} justifyContent="center">
+          {isFetching && !products ? (
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+            >
+              <h4>buscando produtos, por favor aguarde...</h4>
+            </Box>
+          ) : null}
+          <Grid
+            container
+            rowSpacing={3}
+            columnSpacing={4}
+            justifyContent="center"
+          >
             {products?.map((product, index) => (
               <Grid item key={index}>
                 <ProductCard
@@ -50,7 +54,6 @@ export default function Home() {
           <Pagination />
         </Box>
       </Box>
-
     </main>
   )
 }
