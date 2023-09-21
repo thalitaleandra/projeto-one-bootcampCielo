@@ -17,8 +17,7 @@ export default function Home() {
 
   return (
     <main>
-      <CartContextProvider>
-        <Header />
+      <Header />
 
       <Box display={'flex'} mt={5}>
         <Box component={'aside'}>barra lateral para filtros...</Box>
