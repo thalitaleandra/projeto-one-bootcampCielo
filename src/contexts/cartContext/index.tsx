@@ -27,7 +27,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   const cartQuantity = cartItems.length
 
   function addItemToCart(item: CartItem) {
-    console.log('chegou aqui')
     const itemAlreadyExistsInCart = cartItems.findIndex(
       (cartItem) => cartItem.id === item.id,
     )
