@@ -9,9 +9,22 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import DialogTitle from '@mui/material/DialogTitle'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import RemoveIcon from '@mui/icons-material/Remove'
+import AddIcon from '@mui/icons-material/Add'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useTheme } from '@mui/material/styles'
 
-export default function ResponsiveDialog({ open, handleClose }) {
+export default function ResponsiveDialog({
+  open,
+  handleClose,
+  handleAddToCart,
+  handleRemove,
+  onIncrease,
+  onDecrease,
+  quantity,
+}) {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -37,14 +50,24 @@ export default function ResponsiveDialog({ open, handleClose }) {
           {"Use Google's location service?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>oi</DialogContentText>
+          <DialogContentText>
+            <DialogActions>
+              <Button onClick={onIncrease}>
+                <AddIcon />
+              </Button>
+              <input type="number" readOnly value={quantity} />
+              <Button disabled={quantity <= 1} onClick={onDecrease}>
+                <RemoveIcon />
+              </Button>
+            </DialogActions>
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Disagree
+          <Button autoFocus onClick={handleAddToCart}>
+            Adicionar do Carrinho
           </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={handleRemove} autoFocus>
+            Remover do Carrinho
           </Button>
         </DialogActions>
       </Dialog>
