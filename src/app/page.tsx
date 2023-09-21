@@ -20,10 +20,8 @@ export default function Home() {
     <main>
       <CartContextProvider>
         <Header />
-
         <Box display={'flex'} mt={5}>
           <Box component={'aside'}>barra lateral para filtros...</Box>
-
           <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
             {isFetching && !products ? (
               <Box
@@ -46,7 +44,6 @@ export default function Home() {
                 </Grid>
               ))}
             </Grid>
-
             <Pagination />
           </Box>
         </Box>
