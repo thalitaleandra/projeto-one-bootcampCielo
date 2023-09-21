@@ -11,9 +11,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useTheme } from '@mui/material/styles'
 
 export default function ResponsiveDialog({
