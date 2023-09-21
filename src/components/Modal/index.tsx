@@ -1,4 +1,5 @@
 import * as React from 'react'
+import useProducts from '@/hooks/useProducts'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -13,15 +14,8 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
 import { useTheme } from '@mui/material/styles'
 
-export default function ResponsiveDialog({
-  open,
-  handleClose,
-  handleAddToCart,
-  handleRemove,
-  onIncrease,
-  onDecrease,
-  quantity,
-}) {
+export default function ResponsiveDialog({ open, handleClose, handleAddToCart, handleRemove, onIncrease, onDecrease, quantity }) {
+  const { products } = useProducts()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
