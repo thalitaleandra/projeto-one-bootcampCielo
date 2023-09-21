@@ -1,13 +1,16 @@
 'use client'
 
 import { Box, Grid } from '@mui/material'
+
+import { CartContextProvider } from '@/contexts/cartContext'
 import Header from '@/components/Header'
+import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
 import useProducts from '@/hooks/useProducts'
-import Pagination from '@/components/Pagination'
-import { CartContextProvider } from '@/contexts/cartContext'
+import { useState } from 'react'
 
 export default function Home() {
+  const [text, setText] = useState('')
   const { products, isFetching, error } = useProducts({
     productsPerPage: 15,
     page: 1,
@@ -15,11 +18,15 @@ export default function Home() {
   if (error) {
     console.error(error)
   }
+  const handleInputChange = (value: string) => {
+    setText(value)
+  }
 
   return (
     <main>
       <CartContextProvider>
-        <Header />
+        <Header onInputChange={handleInputChange} />
+
         <Box display={'flex'} mt={5}>
           <Box component={'aside'}>barra lateral para filtros...</Box>
           <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
