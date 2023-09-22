@@ -7,6 +7,7 @@ import AppBar from '@mui/material/AppBar'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
 import InputBase from '@mui/material/InputBase'
 import MailIcon from '@mui/icons-material/Mail'
 import Menu from '@mui/material/Menu'
@@ -64,7 +65,7 @@ interface Props {
 }
 
 export default function Header({ onInputChange }: Props) {
-  const { cartQuantity } = useCart()
+  const { cartQuantity,  cleanCart } = useCart()
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -141,6 +142,11 @@ export default function Header({ onInputChange }: Props) {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
+          <Box>
+            <IconButton onClick={cleanCart} color="inherit">
+           <AssignmentTurnedInIcon size="large" />
+           </IconButton>
+          </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size="large"
