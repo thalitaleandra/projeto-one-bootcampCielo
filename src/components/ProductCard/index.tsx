@@ -130,6 +130,7 @@ export default function ProductCard({ itemCard }: itemProps) {
         onIncrease={handleIncrease}
         onDecrease={handleDecrease}
         quantity={quantity}
+        product={itemCard}
       />
     </>
   )
