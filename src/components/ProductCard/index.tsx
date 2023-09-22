@@ -14,9 +14,10 @@ import useModal from '@/hooks/useModal'
 import useCart from '@/hooks/useCart'
 
 interface IProductCard {
-  id: number
+  id: string
   name: string
   avatar: string
+  description: string
   price: number
   rating: number
   category: string

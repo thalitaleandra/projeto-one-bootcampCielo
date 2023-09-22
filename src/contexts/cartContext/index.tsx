@@ -1,13 +1,8 @@
 import { createContext, ReactNode, useState } from 'react'
+import { IProductCard } from '@/components/ProductCard'
 import { produce } from 'immer'
 
-export interface CartItem {
-  id: number
-  name: string
-  avatar: string
-  price: number
-  rating: number
-  category: string
+export interface CartItem extends IProductCard {
   quantity: number
 }
 interface CartContextType {
