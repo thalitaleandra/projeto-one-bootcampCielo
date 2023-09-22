@@ -15,6 +15,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { useTheme } from '@mui/material/styles'
 
 export default function ResponsiveDialog({ open, handleClose, handleAddToCart, handleRemove, onIncrease, onDecrease, quantity, product }) {
+
   const { products } = useProducts()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))

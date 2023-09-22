@@ -13,16 +13,19 @@ export interface Product {
 export interface ProductQueryParams {
   productsPerPage?: number
   page?: number
+  search?: string
 }
 
 export default async function fetchProducts({
   productsPerPage,
   page,
+  search,
 }: ProductQueryParams = {}): Promise<Product[]> {
   const response = await axiosInstance.get('/products', {
     params: {
       pageSize: productsPerPage,
       pageNumber: page,
+      search,
     },
   })
   return response.data
