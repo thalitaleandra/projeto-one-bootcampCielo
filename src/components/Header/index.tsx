@@ -128,7 +128,7 @@ export default function Header({ onInputChange }: Props) {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Nome da loja ou logo
+            Ada Ecommerce
           </Typography>
           <Search>
             <SearchIconWrapper>

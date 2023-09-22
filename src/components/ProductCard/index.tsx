@@ -13,7 +13,7 @@ import Modal from '@/components/Modal'
 import useModal from '@/hooks/useModal'
 import useCart from '@/hooks/useCart'
 
-interface IProductCard {
+export interface IProductCard {
   id: string
   name: string
   avatar: string

@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useState, useEffect } from 'react'
 
 import { IProductCard } from '@/components/ProductCard'
 import { produce } from 'immer'
@@ -13,15 +13,23 @@ interface CartContextType {
   cartQuantity: number
   addItemToCart: (item: CartItem) => void
   removeCartItem: (cartItemId: string) => void
+  cleanCart: () => void
 }
 interface CartContextProviderProps {
   children: ReactNode
 }
+const ITEMS_STORAGE_KEY = 'adaEcommerce:cartItems'
 
 export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const storedCartItems = localStorage.getItem(ITEMS_STORAGE_KEY)
+    if (storedCartItems) {
+      return JSON.parse(storedCartItems)
+    }
+    return []
+  })
   const cartQuantity = cartItems.length
 
   function addItemToCart(item: CartItem) {
@@ -49,10 +57,22 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
     setCartItems(newCart)
   }
+  function cleanCart() {
+    setCartItems([])
+  }
+  useEffect(() => {
+      localStorage.setItem(ITEMS_STORAGE_KEY, JSON.stringify(cartItems))
+  }, [cartItems])
 
   return (
     <CartContext.Provider
-      value={{ cartItems, cartQuantity, addItemToCart, removeCartItem }}
+      value={{
+        cartItems,
+        cartQuantity,
+        addItemToCart,
+        removeCartItem,
+        cleanCart,
+      }}
     >
       {children}
     </CartContext.Provider>
