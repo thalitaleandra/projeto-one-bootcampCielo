@@ -1,25 +1,41 @@
 'use client'
 
 import { Box, Grid } from '@mui/material'
+import { useEffect, useState } from 'react'
 
 import { CartContextProvider } from '@/contexts/cartContext'
 import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
 import useProducts from '@/hooks/useProducts'
-import { useState } from 'react'
 
 export default function Home() {
   const [text, setText] = useState('')
-  const { products, isFetching, error } = useProducts({
-    productsPerPage: 15,
-    page: 1,
+  const [page, setPage] = useState(1)
+  const [perPage, setPerPage] = useState(10)
+  const [totalPage, setTotalPage] = useState(100)
+  const { products, isFetching, error, refetch } = useProducts({
+    productsPerPage: perPage,
+    page,
+    search: text,
   })
   if (error) {
     console.error(error)
   }
   const handleInputChange = (value: string) => {
     setText(value)
+  }
+
+  useEffect(() => {
+    refetch()
+  }, [text, page])
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number,
+  ) => {
+    // Atualize o estado da página quando o usuário clicar em outra página
+    setPage(value)
   }
 
   return (
@@ -51,7 +67,11 @@ export default function Home() {
                 </Grid>
               ))}
             </Grid>
-            <Pagination />
+            <Pagination
+              count={totalPage}
+              page={page}
+              onChange={handlePageChange}
+            />
           </Box>
         </Box>
       </CartContextProvider>
