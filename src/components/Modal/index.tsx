@@ -14,54 +14,61 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
 import { useTheme } from '@mui/material/styles'
 
-export default function ResponsiveDialog({ open, handleClose, handleAddToCart, handleRemove, onIncrease, onDecrease, quantity }) {
+export default function ResponsiveDialog({ open, handleClose, handleAddToCart, handleRemove, onIncrease, onDecrease, quantity, product }) {
+
   const { products } = useProducts()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <div>
-      <Dialog
-        fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
+    <Dialog
+      fullScreen={fullScreen}
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="responsive-dialog-title"
+      maxWidth="sm" 
+      fullWidth 
+    >
+      <DialogTitle id="responsive-dialog-title">
+        {product.name}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          <img src={product.avatar} alt={product.name} style={{ maxWidth: '100%', marginBottom: '1rem' }} />
+          <p>{product.description}</p>
+          <p>Price: ${product.price}</p>
+          <p>Rating: {product.rating}</p>
+          <p>Category: {product.category}</p>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onIncrease}>
+          <AddIcon />
+        </Button>
+        <input type="number" readOnly value={quantity} style={{ width: '3rem', textAlign: 'center' }} />
+        <Button disabled={quantity <= 1} onClick={onDecrease}>
+          <RemoveIcon />
+        </Button>
+      </DialogActions>
+      <DialogActions>
+        <Button autoFocus onClick={handleAddToCart} color="primary"> 
+          Adicionar ao Carrinho
+        </Button>
+        <Button onClick={handleRemove} color="secondary" autoFocus> 
+          Remover do Carrinho
+        </Button>
+      </DialogActions>
+      <IconButton
+        edge="start"
+        color="inherit"
+        onClick={handleClose}
+        aria-label="close"
+        style={{ position: 'absolute', top: '8px', right: '8px' }} 
       >
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-        <DialogTitle id="responsive-dialog-title">
-          {"Ada Card Shop"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <DialogActions>
-              <Button onClick={onIncrease}>
-                <AddIcon />
-              </Button>
-              <input type="number" readOnly value={quantity} />
-              <Button disabled={quantity <= 1} onClick={onDecrease}>
-                <RemoveIcon />
-              </Button>
-            </DialogActions>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleAddToCart}>
-            Adicionar do Carrinho
-          </Button>
-          <Button onClick={handleRemove} autoFocus>
-            Remover do Carrinho
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        <CloseIcon />
+      </IconButton>
+    </Dialog>
+  </div>
   )
 }

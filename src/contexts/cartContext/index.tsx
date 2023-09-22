@@ -9,7 +9,7 @@ interface CartContextType {
   cartItems: CartItem[]
   cartQuantity: number
   addItemToCart: (item: CartItem) => void
-  removeCartItem: (cartItemId: number) => void
+  removeCartItem: (cartItemId: string) => void
 }
 interface CartContextProviderProps {
   children: ReactNode
@@ -34,12 +34,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     })
     setCartItems(newCart)
   }
-  function removeCartItem(cartItemId: number) {
+  function removeCartItem(cartItemId: string) {
     const newCart = produce(cartItems, (draft) => {
       const coffeeExistsInCart = cartItems.findIndex(
         (cartItem) => cartItem.id === cartItemId,
       )
-
       if (coffeeExistsInCart >= 0) {
         draft.splice(coffeeExistsInCart, 1)
       }
