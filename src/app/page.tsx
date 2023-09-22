@@ -3,7 +3,7 @@
 import { Box, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-import { CartContextProvider } from '@/contexts/cartContext'
+import FilterSidebar from '@/components/FilterSidebar'
 import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
@@ -34,17 +34,32 @@ export default function Home() {
     event: React.ChangeEvent<unknown>,
     value: number,
   ) => {
-    // Atualize o estado da página quando o usuário clicar em outra página
     setPage(value)
   }
 
   return (
     <main>
-      <CartContextProvider>
-        <Header onInputChange={handleInputChange} />
-
+      <Header onInputChange={handleInputChange} />
+      <Box p={4}>
         <Box display={'flex'} mt={5}>
-          <Box component={'aside'}>barra lateral para filtros...</Box>
+          <FilterSidebar
+            onClose={() => {
+              console.log('fechou')
+            }}
+            onSubcategoryChange={(subcategory: string) => {
+              console.log(subcategory)
+            }}
+            onPriceChange={(priceRange: number[]) => {
+              console.log(priceRange)
+            }}
+            onRatingChange={(rating: number) => {
+              console.log(rating)
+            }}
+            onCategoryChange={(category: string) => {
+              console.log(category)
+            }}
+            open={true}
+          />
           <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
             {isFetching && !products ? (
               <Box
@@ -74,7 +89,7 @@ export default function Home() {
             />
           </Box>
         </Box>
-      </CartContextProvider>
+      </Box>
     </main>
   )
 }
