@@ -1,34 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ada Ecommerce
 
-## Getting Started
+Esse projeto foi desenvolvido durante o Bootcamp Ada+Cielo 2023, utilizando Next.js (React, TypeScript) e o framework de estilos Material-UI.
 
-First, run the development server:
+## 🔨 Funcionalidades do projeto
+- Interface com dois temas: Dark e Light, com opção de escolha dinâmica pelo usuário.
+- Lista de produtos retornados da API, com as seguintes informações para cada item: imagem, nome, preço, categoria e avaliação.
+- Ao clicar em um item, um modal é aberto, exibindo todas as informações do produto e um campo editável para adicionar a quantidade desejada ao pedido.
+  - Possibilidade de navegar entre os produtos usando as setas do teclado (direita e esquerda) no modal.
+  - Botões "adicionar" e "remover" no modal para ajustar a quantidade do pedido.
+- Ao adicionar um item, um carrinho de compras é exibido com um badge mostrando a quantidade de itens adicionados ao pedido.
+  - Os dados do pedido são persistidos no navegador do cliente.
+- Barra superior com campo de pesquisa para buscar produtos na API.
+  - Botão "atualizar" para recarregar a lista de produtos.
 
-```bash
+## ✔️ Técnicas e tecnologias utilizadas
+- Next.js
+- React
+- TypeScript
+- Material-UI
+- Em breve, mais tecnologias.
+
+## 🛠️ Abrir e rodar o projeto
+Para abrir e rodar o projeto, siga os passos abaixo:
+
+1. Instale as dependências:
+npm install 
+
+2. Inicie o servidor de desenvolvimento:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Design System
+- [Figma: Material-UI v.1 by Fively (Cópia)](https://www.figma.com/file/iJsu1HirhuyuEMvTLIE4xI/Material-UI-v.1-by-Fively-(Copy)?type=design&node-id=0-1&mode=design)
+- [Material-UI](https://mui.com/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy 🚀
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Webapp: Em construção.
+- API: [https://ada-cielo-api.vercel.app/](https://ada-cielo-api.vercel.app/)
 
-## Learn More
+## 📚 Histórico do projeto
+- Na primeira etapa do bootcamp, definimos e dividimos as tarefas utilizando a metodologia ágil Kanban e a ferramenta Trello. O grupo foi composto por Thalita Leandra, Samuel Teixeira e Lília Paula. Além disso, começamos a montar a interface do projeto usando o Figma.
+- Nas aulas subsequentes, seguimos com o desenvolvimento do projeto, implementando funcionalidades e refinando a interface.
 
-To learn more about Next.js, take a look at the following resources:
+## 👥 Grupo
+- Thalita Leandra
+- Samuel Teixeira
+- Lília Paula
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Saiba Mais 📚
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Para aprender mais sobre o Next.js, confira os seguintes recursos:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Documentação do Next.js](https://nextjs.org/docs) - aprenda sobre os recursos e a API do Next.js.
+- [Aprenda Next.js](https://nextjs.org/learn) - um tutorial interativo do Next.js.
