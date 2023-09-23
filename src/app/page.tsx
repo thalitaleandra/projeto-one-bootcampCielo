@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Grid } from '@mui/material'
+import { Box, CircularProgress, Grid, Skeleton } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 import FilterSidebar from '@/components/FilterSidebar'
@@ -82,39 +82,44 @@ export default function Home() {
             open={true}
           />
           <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
-            {isFetching && !products ? (
+            {isFetching ? (
               <Box
                 display={'flex'}
                 justifyContent={'center'}
                 alignItems={'center'}
               >
-                <h4>buscando produtos, por favor aguarde...</h4>
+                <Box display="flex" justifyContent="center" mt={3} mb={3}>
+                  <CircularProgress color="primary" />
+                </Box>
               </Box>
-            ) : null}
-            <Grid
-              container
-              rowSpacing={3}
-              columnSpacing={4}
-              justifyContent="center"
-            >
-              {products?.map((product, index) => (
-                <Grid item key={index}>
-                  <ProductCard
-                    itemCard={product}
-                    isActive={index === currentProduct}
-                    cardIndex={index}
-                    handleClickOpen={handleModalOpen}
-                    handleClose={handleClose}
-                    isModalOpen={open}
-                  />
+            ) : (
+              <>
+                <Grid
+                  container
+                  rowSpacing={3}
+                  columnSpacing={4}
+                  justifyContent="center"
+                >
+                  {products?.map((product, index) => (
+                    <Grid item key={index}>
+                      <ProductCard
+                        itemCard={product}
+                        isActive={index === currentProduct}
+                        cardIndex={index}
+                        handleClickOpen={handleModalOpen}
+                        handleClose={handleClose}
+                        isModalOpen={open}
+                      />
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
-            <Pagination
-              count={totalPage}
-              page={page}
-              onChange={handlePageChange}
-            />
+                <Pagination
+                  count={totalPage}
+                  page={page}
+                  onChange={handlePageChange}
+                />
+              </>
+            )}
           </Box>
         </Box>
       </Box>
