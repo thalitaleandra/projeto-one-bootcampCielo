@@ -12,6 +12,8 @@ import Image from 'next/image'
 import Modal from '@/components/Modal'
 import useCart from '@/hooks/useCart'
 
+import { Product, WithContext } from 'schema-dts'
+
 interface IProductCard {
   id: string
   name: string
@@ -59,8 +61,33 @@ export default function ProductCard({
     removeCartItem(itemCard.id)
   }
 
+  const jsonLd: WithContext<Product> = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    productID: itemCard.id,
+    name: itemCard.name,
+    image: itemCard.avatar,
+    description: itemCard.description,
+    category: itemCard.category,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: itemCard.rating,
+    },
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      price: itemCard.price,
+      priceCurrency: 'BRL',
+    },
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Card
         elevation={isActive ? 24 : 1}
         sx={{ width: 300, boxShadow: 'lg', borderRadius: 5 }}
