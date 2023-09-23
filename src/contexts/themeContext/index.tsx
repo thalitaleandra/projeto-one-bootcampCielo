@@ -42,6 +42,15 @@ export const ThemeProviderWrapper = ({ children }: PropsWithChildren) => {
   const theme = createTheme({
     palette: {
       mode: selectedTheme,
+      background: {
+        default: selectedTheme === 'light' ? '#fff' : '#c48704',
+      },
+      primary: {
+        main: selectedTheme === 'light' ? '#bd19d2' : '#810000',
+      },
+      secondary: {
+        main: selectedTheme === 'light' ? '#c6d219' : '#56b30a',
+      },
     },
   })
 
