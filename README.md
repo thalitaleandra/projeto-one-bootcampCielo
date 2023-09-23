@@ -13,14 +13,14 @@ Esse projeto foi desenvolvido durante o Bootcamp Ada+Cielo 2023, utilizando Next
 - Barra superior com campo de pesquisa para buscar produtos na API.
   - Botão "atualizar" para recarregar a lista de produtos.
 
-## ✔️ Técnicas e tecnologias utilizadas
+## 🧰 Stack Tecnológica
 - Next.js
 - React
 - TypeScript
 - Material-UI
 - Em breve, mais tecnologias.
 
-## 🛠️ Abrir e rodar o projeto
+## 🏃‍♀️ Executando o Projeto
 Para abrir e rodar o projeto, siga os passos abaixo:
 
 1. Instale as dependências:
