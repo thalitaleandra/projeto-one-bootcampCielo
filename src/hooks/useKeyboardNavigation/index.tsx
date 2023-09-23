@@ -1,38 +1,44 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 interface IKeyboardNavigation {
-    initialIndex: number;
-    maxIndex?: number;
-    enterAction: () => void;
+  initialIndex: number
+  maxIndex?: number
+  enterAction: () => void
 }
 
-function useKeyboardNavigation({ initialIndex, enterAction, maxIndex }: IKeyboardNavigation) {
+function useKeyboardNavigation({
+  initialIndex,
+  enterAction,
+  maxIndex,
+}: IKeyboardNavigation) {
+  const [currentProduct, setCurrentProduct] = useState(initialIndex)
+  const maxQtdProducts = maxIndex ?? 0
 
-    const [currentProduct, setCurrentProduct] = useState(initialIndex)
-    const maxQtdProducts = maxIndex ?? 0
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight' && currentProduct < maxQtdProducts) {
+        setCurrentProduct((prevIndex) => prevIndex + 1)
+      } else if (event.key === 'ArrowLeft' && currentProduct > -1) {
+        setCurrentProduct((prevIndex) => prevIndex - 1)
+      } else if (
+        event.key === 'Enter' &&
+        currentProduct > -1 &&
+        currentProduct < maxQtdProducts
+      ) {
+        enterAction()
+      }
+    }
 
-    useEffect(() => {
-        const handleKeydown = (event: KeyboardEvent) => {
-            if (event.key === 'ArrowRight' && currentProduct < maxQtdProducts) {
-                setCurrentProduct((prevIndex) => prevIndex + 1)
-            } else if (event.key === 'ArrowLeft' && currentProduct > -1) {
-                setCurrentProduct((prevIndex) => prevIndex - 1)
-            } else if (event.key === 'Enter' && currentProduct > -1 && currentProduct < maxQtdProducts) {
-                enterAction()
-            }
-        }
+    window.addEventListener('keydown', handleKeydown)
 
-        window.addEventListener('keydown', handleKeydown)
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [currentProduct])
 
-        return () => {
-            window.removeEventListener('keydown', handleKeydown)
-        }
-    }, [currentProduct])
-
-
-    return { currentProduct, setCurrentProduct }
+  return { currentProduct, setCurrentProduct }
 }
 
-export default useKeyboardNavigation;
+export default useKeyboardNavigation

@@ -28,7 +28,7 @@ export default function Home() {
   const { currentProduct, setCurrentProduct } = useKeyboardNavigation({
     initialIndex: -1,
     maxIndex: perPage,
-    enterAction: handleClickOpen
+    enterAction: handleClickOpen,
   })
 
   const handleModalOpen = (cardIndex: number) => {

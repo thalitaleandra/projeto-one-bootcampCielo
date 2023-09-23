@@ -65,7 +65,7 @@ interface Props {
 }
 
 export default function Header({ onInputChange }: Props) {
-  const { cartQuantity,  cleanCart } = useCart()
+  const { cartQuantity, cleanCart } = useCart()
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -144,8 +144,8 @@ export default function Header({ onInputChange }: Props) {
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             <IconButton onClick={cleanCart} color="inherit">
-           <AssignmentTurnedInIcon size="large" />
-           </IconButton>
+              <AssignmentTurnedInIcon size="large" />
+            </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
