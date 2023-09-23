@@ -18,7 +18,6 @@ Esse projeto foi desenvolvido durante o Bootcamp Ada+Cielo 2023, utilizando Next
 - React
 - TypeScript
 - Material-UI
-- Em breve, mais tecnologias.
 
 ## 🏃‍♀️ Executando o Projeto
 Para abrir e rodar o projeto, siga os passos abaixo:
