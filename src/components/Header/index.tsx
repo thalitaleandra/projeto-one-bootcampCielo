@@ -59,10 +59,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 interface Props {
   onInputChange: (text: string) => void
-  onUpdateProducts: () => void
 }
 
-export default function Header({ onInputChange, onUpdateProducts }: Props) {
+export default function Header({ onInputChange }: Props) {
   const { cartQuantity, cleanCart } = useCart()
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -85,10 +84,6 @@ export default function Header({ onInputChange, onUpdateProducts }: Props) {
     return () => clearTimeout(timeoutId)
   }
 
-  const handleUpdateProducts = () => {
-    onUpdateProducts()
-  }
-
   const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
     <Menu
@@ -109,19 +104,6 @@ export default function Header({ onInputChange, onUpdateProducts }: Props) {
       <MenuItem>
         <Box>
           <SwitcheTheme />
-        </Box>
-      </MenuItem>
-      <MenuItem>
-        <Box>
-          <Tooltip title="Atualizar produtos">
-            <IconButton
-              size="large"
-              color="inherit"
-              onClick={handleUpdateProducts}
-            >
-              <CachedIcon />
-            </IconButton>
-          </Tooltip>
         </Box>
       </MenuItem>
     </Menu>
@@ -154,17 +136,6 @@ export default function Header({ onInputChange, onUpdateProducts }: Props) {
             <IconButton onClick={cleanCart} color="inherit">
               <AssignmentTurnedInIcon />
             </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Tooltip title="Atualizar produtos">
-              <IconButton
-                size="large"
-                color="inherit"
-                onClick={handleUpdateProducts}
-              >
-                <CachedIcon />
-              </IconButton>
-            </Tooltip>
           </Box>
           <Box>
             <IconButton size="large" color="inherit">
