@@ -12,6 +12,8 @@ import IconButton from '@mui/material/IconButton'
 import RemoveIcon from '@mui/icons-material/Remove'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import Image from 'next/image'
+import { Product } from '@/services/product/fetchProducts'
 
 interface Props {
   open: boolean
@@ -21,7 +23,7 @@ interface Props {
   onIncrease: () => void
   onDecrease: () => void
   quantity: number
-  product: any
+  product: Product
 }
 
 export default function ResponsiveDialog({
@@ -50,10 +52,17 @@ export default function ResponsiveDialog({
         <DialogTitle id="responsive-dialog-title">{product.name}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <img
+            <Image
               src={product.avatar}
               alt={product.name}
-              style={{ maxWidth: '100%', marginBottom: '1rem' }}
+              width={1}
+              height={1}
+              sizes="100vw"
+              placeholder="empty"
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
             />
             <p>{product.description}</p>
             <p>Price: ${product.price}</p>

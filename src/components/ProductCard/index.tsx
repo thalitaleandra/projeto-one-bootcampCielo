@@ -10,10 +10,9 @@ import {
 import { useState } from 'react'
 import Image from 'next/image'
 import Modal from '@/components/Modal'
-import useModal from '@/hooks/useModal'
 import useCart from '@/hooks/useCart'
 
-export interface IProductCard {
+interface IProductCard {
   id: string
   name: string
   avatar: string
@@ -25,10 +24,21 @@ export interface IProductCard {
 
 interface itemProps {
   itemCard: IProductCard
+  isActive?: boolean
+  isModalOpen: boolean
+  handleClickOpen: (cardIndex: number) => void
+  handleClose: () => void
+  cardIndex: number
 }
 
-export default function ProductCard({ itemCard }: itemProps) {
-  const { handleClickOpen, handleClose, open } = useModal()
+export default function ProductCard({
+  itemCard,
+  isActive,
+  isModalOpen,
+  handleClickOpen,
+  handleClose,
+  cardIndex,
+}: itemProps) {
   const { addItemToCart, removeCartItem } = useCart()
   const [quantity, setQuantity] = useState(1)
 
@@ -45,20 +55,20 @@ export default function ProductCard({ itemCard }: itemProps) {
     }
     addItemToCart(itemToAdd)
   }
-
   function handleRemove() {
     removeCartItem(itemCard.id)
   }
+
   return (
     <>
       <Card
+        elevation={isActive ? 24 : 1}
         sx={{ width: 300, boxShadow: 'lg', borderRadius: 5 }}
         style={{
-          boxShadow:
-            'box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;',
+          boxShadow: `box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;`,
         }}
       >
-        <CardActionArea onClick={handleClickOpen}>
+        <CardActionArea onClick={() => handleClickOpen(cardIndex)}>
           <Box sx={{ position: 'relative', height: '200px' }}>
             <Image
               alt={`Representação do produto ${itemCard.name}`}
@@ -122,16 +132,19 @@ export default function ProductCard({ itemCard }: itemProps) {
           </CardContent>
         </CardActionArea>
       </Card>
-      <Modal
-        open={open}
-        handleClose={handleClose}
-        handleAddToCart={handleAddToCart}
-        handleRemove={handleRemove}
-        onIncrease={handleIncrease}
-        onDecrease={handleDecrease}
-        quantity={quantity}
-        product={itemCard}
-      />
+
+      {isActive && (
+        <Modal
+          open={isModalOpen}
+          handleClose={handleClose}
+          handleAddToCart={handleAddToCart}
+          handleRemove={handleRemove}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+          quantity={quantity}
+          product={itemCard}
+        />
+      )}
     </>
   )
 }
