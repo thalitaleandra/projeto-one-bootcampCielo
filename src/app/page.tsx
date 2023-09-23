@@ -7,8 +7,8 @@ import FilterSidebar from '@/components/FilterSidebar'
 import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
-import useProducts from '@/hooks/useProducts'
 import useModal from '@/hooks/useModal'
+import useProducts from '@/hooks/useProducts'
 
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(-1)
@@ -73,10 +73,12 @@ export default function Home() {
   ) => {
     setPage(value)
   }
-
   return (
-    <>
-      <Header onInputChange={handleInputChange} />
+    <main>
+      <Header
+        onInputChange={handleInputChange}
+        onUpdateProducts={() => refetch()}
+      />
       <Box p={4}>
         <Box display={'flex'} mt={5}>
           <FilterSidebar
@@ -134,6 +136,6 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-    </>
+    </main>
   )
 }
