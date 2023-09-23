@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard'
 import useProducts from '@/hooks/useProducts'
 import useModal from '@/hooks/useModal'
 import useKeyboardNavigation from '@/hooks/useKeyboardNavigation'
+import UpdateProducts from '@/components/UpdateProducts'
 
 export default function Home() {
   const [text, setText] = useState('')
@@ -58,6 +59,9 @@ export default function Home() {
     <>
       <Header onInputChange={handleInputChange} />
       <Box p={4}>
+        <Box mb={5} display="flex" justifyContent="flex-end">
+          <UpdateProducts onUpdateProducts={() => refetch()} />
+        </Box>
         <Box display={'flex'} mt={5}>
           <FilterSidebar
             onClose={() => {

@@ -6,7 +6,6 @@ import AppBar from '@mui/material/AppBar'
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
-import CachedIcon from '@mui/icons-material/Cached'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Menu from '@mui/material/Menu'
@@ -16,9 +15,9 @@ import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SwitcheTheme from '../SwitchTheme'
 import Toolbar from '@mui/material/Toolbar'
-import { Tooltip } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import useCart from '@/hooks/useCart'
+import { Tooltip } from '@mui/material'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -133,16 +132,21 @@ export default function Header({ onInputChange }: Props) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <IconButton onClick={cleanCart} color="inherit">
-              <AssignmentTurnedInIcon />
-            </IconButton>
+            <Tooltip title="Limpar carrinho">
+              <IconButton onClick={cleanCart} color="inherit">
+                <AssignmentTurnedInIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
+
           <Box>
-            <IconButton size="large" color="inherit">
-              <Badge badgeContent={cartQuantity} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <Tooltip title="Ver carrinho">
+              <IconButton size="large" color="inherit">
+                <Badge badgeContent={cartQuantity} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
