@@ -60,7 +60,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems([])
   }
   useEffect(() => {
-      localStorage.setItem(ITEMS_STORAGE_KEY, JSON.stringify(cartItems))
+    localStorage.setItem(ITEMS_STORAGE_KEY, JSON.stringify(cartItems))
   }, [cartItems])
 
   return (

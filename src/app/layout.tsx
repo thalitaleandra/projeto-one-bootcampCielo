@@ -1,16 +1,34 @@
 import './globals.css'
 
-import { CartContextProvider } from '@/contexts/cartContext'
 import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
 import Providers from './providers'
-import { ThemeProviderWrapper } from '@/contexts/themeContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Ecommerce',
+  title: 'Ada Ecommerce',
   description: 'Ecommerce Ada Cielo - Frontend Challenge',
+  authors: [
+    {
+      name: 'Samuel Molendolff Teixeira',
+      url: 'https://www.linkedin.com/in/samuelmteixeira/',
+    },
+    {
+      name: 'Thalita Leandra ',
+      url: 'https://www.linkedin.com/in/thalitaleandra/',
+    },
+    {
+      name: 'Lília Paula Neiva',
+      url: 'https://www.linkedin.com/in/lilia-paula-neiva/',
+    },
+  ],
+  keywords: ['Cielo', 'Ada tech', 'Front-End', 'Frontend Challenge'],
+  openGraph: {
+    title: 'Ada Ecommerce',
+    type: 'website',
+    description: 'Ecommerce Ada Cielo - Frontend Challenge',
+  },
 }
 
 export default function RootLayout({
@@ -21,11 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProviderWrapper>
-          <Providers>
-            <CartContextProvider>{children}</CartContextProvider>
-          </Providers>
-        </ThemeProviderWrapper>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

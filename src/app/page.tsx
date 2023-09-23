@@ -7,15 +7,16 @@ import FilterSidebar from '@/components/FilterSidebar'
 import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
-import useModal from '@/hooks/useModal'
 import useProducts from '@/hooks/useProducts'
+import useModal from '@/hooks/useModal'
+import useKeyboardNavigation from '@/hooks/useKeyboardNavigation'
 
 export default function Home() {
-  const [currentCard, setCurrentCard] = useState(-1)
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [totalPage, setTotalPage] = useState(100)
+
   const { products, isFetching, error, refetch } = useProducts({
     productsPerPage: perPage,
     page,
@@ -24,9 +25,15 @@ export default function Home() {
 
   const { handleClickOpen, handleClose, open } = useModal()
 
+  const { currentProduct, setCurrentProduct } = useKeyboardNavigation({
+    initialIndex: -1,
+    maxIndex: perPage,
+    enterAction: handleClickOpen,
+  })
+
   const handleModalOpen = (cardIndex: number) => {
     handleClickOpen()
-    setCurrentCard(cardIndex)
+    setCurrentProduct(cardIndex)
   }
 
   if (error) {
@@ -35,33 +42,6 @@ export default function Home() {
   const handleInputChange = (value: string) => {
     setText(value)
   }
-
-  const handleNext = () => {
-    setCurrentCard((prevIndex) => prevIndex + 1)
-  }
-
-  const handlePrev = () => {
-    setCurrentCard((prevIndex) => prevIndex - 1)
-  }
-
-  // ! WIP: criar modulo separado
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') {
-        handleNext()
-      } else if (event.key === 'ArrowLeft' && currentCard > -1) {
-        handlePrev()
-      } else if (event.key === 'Enter' && currentCard > -1) {
-        handleClickOpen()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeydown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeydown)
-    }
-  }, [currentCard])
 
   useEffect(() => {
     refetch()
@@ -73,12 +53,10 @@ export default function Home() {
   ) => {
     setPage(value)
   }
+
   return (
-    <main>
-      <Header
-        onInputChange={handleInputChange}
-        onUpdateProducts={() => refetch()}
-      />
+    <>
+      <Header onInputChange={handleInputChange} />
       <Box p={4}>
         <Box display={'flex'} mt={5}>
           <FilterSidebar
@@ -119,7 +97,7 @@ export default function Home() {
                 <Grid item key={index}>
                   <ProductCard
                     itemCard={product}
-                    isActive={index === currentCard}
+                    isActive={index === currentProduct}
                     cardIndex={index}
                     handleClickOpen={handleModalOpen}
                     handleClose={handleClose}
@@ -136,6 +114,6 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-    </main>
+    </>
   )
 }
