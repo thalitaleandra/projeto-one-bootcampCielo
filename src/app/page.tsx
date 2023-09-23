@@ -8,8 +8,10 @@ import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
 import useProducts from '@/hooks/useProducts'
+import useModal from '@/hooks/useModal'
 
 export default function Home() {
+  const [currentCard, setCurrentCard] = useState(-1)
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
@@ -19,12 +21,47 @@ export default function Home() {
     page,
     search: text,
   })
+
+  const { handleClickOpen, handleClose, open } = useModal()
+
+  const handleModalOpen = (cardIndex: number) => {
+    handleClickOpen()
+    setCurrentCard(cardIndex)
+  }
+
   if (error) {
     console.error(error)
   }
   const handleInputChange = (value: string) => {
     setText(value)
   }
+
+  const handleNext = () => {
+    setCurrentCard((prevIndex) => prevIndex + 1)
+  }
+
+  const handlePrev = () => {
+    setCurrentCard((prevIndex) => prevIndex - 1)
+  }
+
+  // ! WIP: criar modulo separado
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        handleNext()
+      } else if (event.key === 'ArrowLeft' && currentCard > -1) {
+        handlePrev()
+      } else if (event.key === 'Enter' && currentCard > -1) {
+        handleClickOpen()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeydown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [currentCard])
 
   useEffect(() => {
     refetch()
@@ -38,7 +75,7 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <>
       <Header onInputChange={handleInputChange} />
       <Box p={4}>
         <Box display={'flex'} mt={5}>
@@ -78,7 +115,14 @@ export default function Home() {
             >
               {products?.map((product, index) => (
                 <Grid item key={index}>
-                  <ProductCard itemCard={product} />
+                  <ProductCard
+                    itemCard={product}
+                    isActive={index === currentCard}
+                    cardIndex={index}
+                    handleClickOpen={handleModalOpen}
+                    handleClose={handleClose}
+                    isModalOpen={open}
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -90,6 +134,6 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-    </main>
+    </>
   )
 }
