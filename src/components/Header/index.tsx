@@ -2,28 +2,26 @@ import * as React from 'react'
 
 import { alpha, styled } from '@mui/material/styles'
 
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import AppBar from '@mui/material/AppBar'
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
+import CachedIcon from '@mui/icons-material/Cached'
 import IconButton from '@mui/material/IconButton'
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
 import InputBase from '@mui/material/InputBase'
-import MailIcon from '@mui/icons-material/Mail'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreIcon from '@mui/icons-material/MoreVert'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SwitcheTheme from '../SwitchTheme'
 import Toolbar from '@mui/material/Toolbar'
+import { Tooltip } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import useCart from '@/hooks/useCart'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
-  borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -51,7 +49,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -62,9 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 interface Props {
   onInputChange: (text: string) => void
+  onUpdateProducts: () => void
 }
 
-export default function Header({ onInputChange }: Props) {
+export default function Header({ onInputChange, onUpdateProducts }: Props) {
   const { cartQuantity, cleanCart } = useCart()
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -78,6 +76,17 @@ export default function Header({ onInputChange }: Props) {
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget)
+  }
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const timeoutId = setTimeout(() => {
+      onInputChange(event.target.value)
+    }, 1000)
+    return () => clearTimeout(timeoutId)
+  }
+
+  const handleUpdateProducts = () => {
+    onUpdateProducts()
   }
 
   const mobileMenuId = 'primary-search-account-menu-mobile'
@@ -98,29 +107,28 @@ export default function Header({ onInputChange }: Props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={cartQuantity} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>{cartQuantity}</p>
+        <Box>
+          <SwitcheTheme />
+        </Box>
+      </MenuItem>
+      <MenuItem>
+        <Box>
+          <Tooltip title="Atualizar produtos">
+            <IconButton
+              size="large"
+              color="inherit"
+              onClick={handleUpdateProducts}
+            >
+              <CachedIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
       </MenuItem>
     </Menu>
   )
 
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const timeoutId = setTimeout(() => {
-      onInputChange(event.target.value)
-    }, 1000)
-    return () => clearTimeout(timeoutId)
-  }
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
         <Toolbar>
           <Typography
@@ -144,15 +152,22 @@ export default function Header({ onInputChange }: Props) {
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             <IconButton onClick={cleanCart} color="inherit">
-              <AssignmentTurnedInIcon size="large" />
+              <AssignmentTurnedInIcon />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
+            <Tooltip title="Atualizar produtos">
+              <IconButton
+                size="large"
+                color="inherit"
+                onClick={handleUpdateProducts}
+              >
+                <CachedIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+          <Box>
+            <IconButton size="large" color="inherit">
               <Badge badgeContent={cartQuantity} color="error">
                 <ShoppingCartIcon />
               </Badge>
@@ -161,7 +176,6 @@ export default function Header({ onInputChange }: Props) {
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
@@ -170,7 +184,7 @@ export default function Header({ onInputChange }: Props) {
               <MoreIcon />
             </IconButton>
           </Box>
-          <Box>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <SwitcheTheme />
           </Box>
         </Toolbar>
