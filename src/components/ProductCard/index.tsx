@@ -18,7 +18,8 @@ import IProduct from '@/interfaces/IProduct'
 const Card = styled(CardBase)(({ theme }) => ({
   width: 300,
   borderRadius: 20,
-  backgroundColor: theme.palette.mode === 'dark' ? 'rbg(100, 100, 100)' : '#FFFFFF',
+  backgroundColor:
+    theme.palette.mode === 'dark' ? 'rbg(100, 100, 100)' : '#FFFFFF',
 }))
 
 interface ItemProps {

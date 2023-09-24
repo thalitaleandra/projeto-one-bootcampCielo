@@ -65,7 +65,7 @@ export default function Home() {
 
   useEffect(() => {
     refetch()
-  }, [text, page])
+  }, [text, page, refetch])
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,

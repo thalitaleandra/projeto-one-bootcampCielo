@@ -36,7 +36,7 @@ function useKeyboardNavigation({
     return () => {
       window.removeEventListener('keydown', handleKeydown)
     }
-  }, [currentProduct])
+  }, [currentProduct, enterAction, maxQtdProducts])
 
   return { currentProduct, setCurrentProduct }
 }
