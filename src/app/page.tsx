@@ -84,10 +84,7 @@ export default function Home() {
     <>
       <Header onInputChange={handleInputChange} />
       <Box p={4}>
-        <Box mb={5} display="flex" justifyContent="flex-end">
-          <UpdateProducts onUpdateProducts={() => refetch()} />
-        </Box>
-        <Box display={'flex'} mt={5}>
+        <Box display={'flex'} mt={3}>
           <Box display="flex" flexDirection="column">
             <FilterSidebar
               onPriceChange={(priceRange: number[]) => {

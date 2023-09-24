@@ -19,7 +19,7 @@ const Card = styled(CardBase)(({ theme }) => ({
   width: 300,
   borderRadius: 20,
   backgroundColor:
-    theme.palette.mode === 'dark' ? 'rbg(100, 100, 100)' : '#FFFFFF',
+    theme.palette.mode === 'dark' ? theme.palette.secondary.dark : theme.palette.secondary.light,
 }))
 
 interface ItemProps {
@@ -103,7 +103,7 @@ export default function ProductCard({
           <CardContent sx={{ height: '200px' }}>
             <Chip
               label={itemCard?.category?.toLowerCase()}
-              color="info"
+              color="primary"
               size="small"
               sx={{ opacity: '0.8', fontSize: '0.8em' }}
             />
