@@ -1,7 +1,7 @@
 import {
   Box,
   Rating,
-  Card,
+  Card as CardBase,
   Typography,
   CardContent,
   CardActionArea,
@@ -11,9 +11,15 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Modal from '@/components/Modal'
 import useCart from '@/hooks/useCart'
-
+import { styled } from '@mui/material/styles'
 import { Product, WithContext } from 'schema-dts'
 import IProduct from '@/interfaces/IProduct'
+
+const Card = styled(CardBase)(({ theme }) => ({
+  width: 300,
+  borderRadius: 20,
+  backgroundColor: theme.palette.mode === 'dark' ? 'rbg(100, 100, 100)' : '#FFFFFF',
+}))
 
 interface ItemProps {
   itemCard: IProduct
@@ -79,13 +85,7 @@ export default function ProductCard({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Card
-        elevation={isActive ? 24 : 1}
-        sx={{ width: 300, boxShadow: 'lg', borderRadius: 5 }}
-        style={{
-          boxShadow: `box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;`,
-        }}
-      >
+      <Card elevation={isActive ? 5 : 1}>
         <CardActionArea onClick={() => handleClickOpen(cardIndex)}>
           <Box sx={{ position: 'relative', height: '200px' }}>
             <Image
