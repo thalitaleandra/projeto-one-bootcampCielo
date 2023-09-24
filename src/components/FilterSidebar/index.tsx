@@ -1,6 +1,6 @@
 import {
+  Button,
   Divider,
-  Drawer,
   List,
   ListItem,
   ListItemText,
@@ -8,49 +8,46 @@ import {
   Typography,
 } from '@mui/material'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 interface FilterSidebarProps {
-  open: boolean
-  onClose: () => void
   onCategoryChange: (category: string) => void
-  onSubcategoryChange: (subcategory: string) => void
   onPriceChange: (priceRange: number[]) => void
   onRatingChange: (rating: number) => void
 }
 
-const categories = ['Electronics', 'Clothing', 'Books']
-const subcategories = [
-  'Smartphones',
-  'Laptops',
-  'T-Shirts',
-  'Jeans',
-  'Fiction',
-  'Non-Fiction',
+const categories = [
+  'Tools',
+  'Sports',
+  'Automotive',
+  'Toys',
+  'Kids',
+  'Outdoors',
+  'Music',
+  'Books',
+  'Health',
 ]
 
 export default function FilterSidebar({
-  open,
-  onClose,
   onCategoryChange,
-  onSubcategoryChange,
   onPriceChange,
   onRatingChange,
 }: FilterSidebarProps) {
+  const [value, setValue] = useState<number | number[]>([0, 1000])
+  const [rating, setRating] = useState<number>(0)
+
   const handleCategoryClick = (category: string) => {
     onCategoryChange(category)
   }
 
-  const handleSubcategoryClick = (subcategory: string) => {
-    onSubcategoryChange(subcategory)
-  }
-
   const handlePriceChange = (event: Event, priceRange: number | number[]) => {
     onPriceChange(priceRange as number[])
+    setValue(priceRange as number[])
   }
 
   const handleRatingChange = (event: Event, rating: number | number[]) => {
     onRatingChange(rating as number)
+    setRating(rating as number)
   }
 
   return (
@@ -61,26 +58,15 @@ export default function FilterSidebar({
         </Typography>
         {categories.map((category) => (
           <ListItem
-            button
             key={category}
             onClick={() => handleCategoryClick(category)}
           >
-            <ListItemText primary={category} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        <Typography variant="h6" gutterBottom>
-          Subcategorias
-        </Typography>
-        {subcategories.map((subcategory) => (
-          <ListItem
-            button
-            key={subcategory}
-            onClick={() => handleSubcategoryClick(subcategory)}
-          >
-            <ListItemText primary={subcategory} />
+            <ListItemText
+              primary={category}
+              sx={{
+                cursor: 'pointer',
+              }}
+            />
           </ListItem>
         ))}
       </List>
@@ -90,7 +76,7 @@ export default function FilterSidebar({
           Preço
         </Typography>
         <Slider
-          value={[0, 1000]} // Valor inicial do intervalo de preço
+          value={value}
           max={1000}
           onChange={handlePriceChange}
           valueLabelDisplay="auto"
@@ -103,7 +89,7 @@ export default function FilterSidebar({
           Avaliação
         </Typography>
         <Slider
-          value={0} // Valor inicial da avaliação
+          value={rating}
           max={5}
           step={0.1}
           onChange={handleRatingChange}
@@ -111,6 +97,7 @@ export default function FilterSidebar({
           valueLabelFormat={(value) => value.toFixed(1)}
         />
       </List>
+      <Divider />
     </div>
   )
 }

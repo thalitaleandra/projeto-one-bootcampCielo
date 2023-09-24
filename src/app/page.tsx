@@ -1,22 +1,26 @@
 'use client'
 
-import { Box, CircularProgress, Grid, Skeleton } from '@mui/material'
+import { Box, Button, CircularProgress, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 import FilterSidebar from '@/components/FilterSidebar'
 import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
-import useProducts from '@/hooks/useProducts'
-import useModal from '@/hooks/useModal'
-import useKeyboardNavigation from '@/hooks/useKeyboardNavigation'
 import UpdateProducts from '@/components/UpdateProducts'
+import useKeyboardNavigation from '@/hooks/useKeyboardNavigation'
+import useModal from '@/hooks/useModal'
+import useProducts from '@/hooks/useProducts'
 
 export default function Home() {
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [totalPage, setTotalPage] = useState(100)
+  const [categories, setCategories] = useState<string[]>([])
+
+  const [priceRange, setPriceRange] = useState<number[]>([])
+  const [rating, setRating] = useState(0)
 
   const { products, isFetching, error, refetch } = useProducts({
     productsPerPage: perPage,
@@ -30,6 +34,21 @@ export default function Home() {
     initialIndex: -1,
     maxIndex: perPage,
     enterAction: handleClickOpen,
+  })
+
+  const filteredProducts = products?.filter((product) => {
+    const price = parseFloat(String(product.price))
+    if (price < priceRange[0] || price > priceRange[1]) {
+      return false
+    }
+    if (categories.length > 0 && !categories.includes(product.category)) {
+      return false
+    }
+    if (rating !== null && rating !== 0 && product.rating !== rating) {
+      return false
+    }
+
+    return true
   })
 
   const handleModalOpen = (cardIndex: number) => {
@@ -55,6 +74,12 @@ export default function Home() {
     setPage(value)
   }
 
+  const handleClearFilters = () => {
+    setPriceRange([])
+    setRating(0)
+    setCategories([])
+  }
+
   return (
     <>
       <Header onInputChange={handleInputChange} />
@@ -63,24 +88,22 @@ export default function Home() {
           <UpdateProducts onUpdateProducts={() => refetch()} />
         </Box>
         <Box display={'flex'} mt={5}>
-          <FilterSidebar
-            onClose={() => {
-              console.log('fechou')
-            }}
-            onSubcategoryChange={(subcategory: string) => {
-              console.log(subcategory)
-            }}
-            onPriceChange={(priceRange: number[]) => {
-              console.log(priceRange)
-            }}
-            onRatingChange={(rating: number) => {
-              console.log(rating)
-            }}
-            onCategoryChange={(category: string) => {
-              console.log(category)
-            }}
-            open={true}
-          />
+          <Box display="flex" flexDirection="column">
+            <FilterSidebar
+              onPriceChange={(priceRange: number[]) => {
+                setPriceRange(priceRange)
+              }}
+              onRatingChange={(rating: number) => {
+                setRating(rating)
+              }}
+              onCategoryChange={(category: string) => {
+                categories.includes(category)
+                  ? setCategories(categories.filter((cat) => cat !== category))
+                  : setCategories([...categories, category])
+              }}
+            />
+            <Button onClick={handleClearFilters}>Limpar filtros</Button>
+          </Box>
           <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
             {isFetching ? (
               <Box
@@ -100,18 +123,19 @@ export default function Home() {
                   columnSpacing={4}
                   justifyContent="center"
                 >
-                  {products?.map((product, index) => (
-                    <Grid item key={index}>
-                      <ProductCard
-                        itemCard={product}
-                        isActive={index === currentProduct}
-                        cardIndex={index}
-                        handleClickOpen={handleModalOpen}
-                        handleClose={handleClose}
-                        isModalOpen={open}
-                      />
-                    </Grid>
-                  ))}
+                  {filteredProducts &&
+                    filteredProducts?.map((product, index) => (
+                      <Grid item key={index}>
+                        <ProductCard
+                          itemCard={product}
+                          isActive={index === currentProduct}
+                          cardIndex={index}
+                          handleClickOpen={handleModalOpen}
+                          handleClose={handleClose}
+                          isModalOpen={open}
+                        />
+                      </Grid>
+                    ))}
                 </Grid>
                 <Pagination
                   count={totalPage}

@@ -110,7 +110,7 @@ export default function ProductCard({
 
           <CardContent sx={{ height: '200px' }}>
             <Chip
-              label={itemCard.category.toLowerCase()}
+              label={itemCard?.category?.toLowerCase()}
               color="info"
               size="small"
               sx={{ opacity: '0.8', fontSize: '0.8em' }}
