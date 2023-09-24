@@ -24,11 +24,6 @@ export const metadata: Metadata = {
     },
   ],
   keywords: ['Cielo', 'Ada tech', 'Front-End', 'Frontend Challenge'],
-  openGraph: {
-    title: 'Ada Ecommerce',
-    type: 'website',
-    description: 'Ecommerce Ada Cielo - Frontend Challenge',
-  },
 }
 
 export default function RootLayout({

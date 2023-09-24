@@ -13,7 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Image from 'next/image'
-import { Product } from '@/services/product/fetchProducts'
+import IProduct from '@/interfaces/IProduct'
 
 interface Props {
   open: boolean
@@ -23,7 +23,7 @@ interface Props {
   onIncrease: () => void
   onDecrease: () => void
   quantity: number
-  product: Product
+  product: IProduct
 }
 
 export default function ResponsiveDialog({
@@ -51,24 +51,23 @@ export default function ResponsiveDialog({
       >
         <DialogTitle id="responsive-dialog-title">{product.name}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <Image
-              src={product.avatar}
-              alt={product.name}
-              width={1}
-              height={1}
-              sizes="100vw"
-              placeholder="empty"
-              style={{
-                width: '100%',
-                height: 'auto',
-              }}
-            />
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-            <p>Rating: {product.rating}</p>
-            <p>Category: {product.category}</p>
-          </DialogContentText>
+          <Image
+            src={product.avatar}
+            alt={product.name}
+            width={1}
+            height={1}
+            sizes="100vw"
+            placeholder="empty"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+          />
+
+          <DialogContentText>{product.description}</DialogContentText>
+          <DialogContentText>Price: ${product.price}</DialogContentText>
+          <DialogContentText>Rating: {product.rating}</DialogContentText>
+          <DialogContentText>Category: {product.category}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={onIncrease}>
