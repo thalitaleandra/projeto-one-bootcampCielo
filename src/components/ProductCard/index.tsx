@@ -13,19 +13,10 @@ import Modal from '@/components/Modal'
 import useCart from '@/hooks/useCart'
 
 import { Product, WithContext } from 'schema-dts'
+import IProduct from '@/interfaces/IProduct'
 
-interface IProductCard {
-  id: string
-  name: string
-  avatar: string
-  description: string
-  price: number
-  rating: number
-  category: string
-}
-
-interface itemProps {
-  itemCard: IProductCard
+interface ItemProps {
+  itemCard: IProduct
   isActive?: boolean
   isModalOpen: boolean
   handleClickOpen: (cardIndex: number) => void
@@ -40,7 +31,7 @@ export default function ProductCard({
   handleClickOpen,
   handleClose,
   cardIndex,
-}: itemProps) {
+}: ItemProps) {
   const { addItemToCart, removeCartItem } = useCart()
   const [quantity, setQuantity] = useState(1)
 

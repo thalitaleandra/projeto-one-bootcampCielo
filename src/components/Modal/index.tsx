@@ -13,7 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Image from 'next/image'
-import { Product } from '@/services/product/fetchProducts'
+import IProduct from '@/interfaces/IProduct'
 
 interface Props {
   open: boolean
@@ -23,7 +23,7 @@ interface Props {
   onIncrease: () => void
   onDecrease: () => void
   quantity: number
-  product: Product
+  product: IProduct
 }
 
 export default function ResponsiveDialog({

@@ -1,10 +1,10 @@
 'use client'
 
 import { ReactNode, createContext, useState, useEffect } from 'react'
-import { IProductCard } from '@/components/ProductCard'
 import { produce } from 'immer'
+import IProduct from '@/interfaces/IProduct'
 
-export interface CartItem extends IProductCard {
+export interface CartItem extends IProduct {
   quantity: number
 }
 interface CartContextType {
@@ -23,10 +23,13 @@ export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    const storedCartItems = localStorage.getItem(ITEMS_STORAGE_KEY)
-    if (storedCartItems) {
-      return JSON.parse(storedCartItems)
+    if (typeof window !== 'undefined') {
+      const storedCartItems = localStorage.getItem(ITEMS_STORAGE_KEY)
+      if (storedCartItems) {
+        return JSON.parse(storedCartItems)
+      }
     }
+
     return []
   })
   const cartQuantity = cartItems.length
