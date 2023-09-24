@@ -25,7 +25,7 @@ const AppBar = styled(BaseAppBar)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main
 }))
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled(Box)(({ theme }) => ({
   position: 'relative',
   backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.common.white, 0.9),
   '&:hover': {
@@ -48,7 +48,7 @@ const Search = styled('div')(({ theme }) => ({
   borderRadius: 5,
 }))
 
-const SearchMobile = styled('div')(({ theme }) => ({
+const SearchMobile = styled(Box)(({ theme }) => ({
   position: 'relative',
   backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.common.white, 0.9),
   '&:hover': {
@@ -139,7 +139,7 @@ export default function Header({ onInputChange }: Props) {
     <>
       <AppBar position="static">
         <Toolbar sx={{ display: 'block', flexDirection: 'column' }}>
-          <Box py={2} flex={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box py={1} flex={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box display={'flex'} gap={1} alignItems={'baseline'}>
               <Image src={logoText} height={40} width={65} alt='Logo da Ada tech' />
               <Typography
@@ -154,7 +154,7 @@ export default function Header({ onInputChange }: Props) {
             </Box>
 
 
-            <Search>
+            <Search my={0.5}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -202,7 +202,7 @@ export default function Header({ onInputChange }: Props) {
 
           </Box>
 
-          <Box pb={2} sx={{ display: { xs: 'flex', sm: 'none' } }}>
+          <Box pb={1} sx={{ display: { xs: 'flex', sm: 'none' } }}>
             <SearchMobile>
               <SearchIconWrapper>
                 <SearchIcon />
