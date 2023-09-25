@@ -19,7 +19,9 @@ const Card = styled(CardBase)(({ theme }) => ({
   width: 300,
   borderRadius: 20,
   backgroundColor:
-    theme.palette.mode === 'dark' ? theme.palette.secondary.dark : theme.palette.secondary.light,
+    theme.palette.mode === 'dark'
+      ? theme.palette.secondary.dark
+      : theme.palette.secondary.light,
 }))
 
 interface ItemProps {

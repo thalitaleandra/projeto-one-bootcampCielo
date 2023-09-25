@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline'
 import { PaletteMode } from '@mui/material'
 
 const ThemeContext = createContext({
@@ -51,9 +51,8 @@ export const ThemeProviderWrapper = ({ children }: PropsWithChildren) => {
       secondary: {
         light: '#FFFAFA',
         dark: '#181c23',
-        main: '#181c23'
+        main: '#181c23',
       },
-
     },
   })
 

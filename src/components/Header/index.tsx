@@ -22,14 +22,20 @@ import Image from 'next/image'
 import logoText from '@/assets/img/logo-text.png'
 
 const AppBar = styled(BaseAppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main
+  backgroundColor: theme.palette.secondary.main,
 }))
 
 const Search = styled(Box)(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.common.white, 0.9),
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? alpha(theme.palette.common.white, 0.15)
+      : alpha(theme.palette.common.white, 0.9),
   '&:hover': {
-    backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.25) : theme.palette.common.white,
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? alpha(theme.palette.common.white, 0.25)
+        : theme.palette.common.white,
   },
   marginRight: theme.spacing(2),
   display: 'none',
@@ -50,9 +56,15 @@ const Search = styled(Box)(({ theme }) => ({
 
 const SearchMobile = styled(Box)(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.common.white, 0.9),
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? alpha(theme.palette.common.white, 0.15)
+      : alpha(theme.palette.common.white, 0.9),
   '&:hover': {
-    backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.25) : theme.palette.common.white,
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? alpha(theme.palette.common.white, 0.25)
+        : theme.palette.common.white,
   },
   display: 'flex',
   marginLeft: 0,
@@ -139,9 +151,18 @@ export default function Header({ onInputChange }: Props) {
     <>
       <AppBar position="static">
         <Toolbar sx={{ display: 'block', flexDirection: 'column' }}>
-          <Box py={1} flex={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box
+            py={1}
+            flex={1}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
             <Box display={'flex'} gap={1} alignItems={'baseline'}>
-              <Image src={logoText} height={40} width={65} alt='Logo da Ada tech' />
+              <Image
+                src={logoText}
+                height={40}
+                width={65}
+                alt="Logo da Ada tech"
+              />
               <Typography
                 variant="h6"
                 noWrap
@@ -152,7 +173,6 @@ export default function Header({ onInputChange }: Props) {
                 Ecommerce
               </Typography>
             </Box>
-
 
             <Search my={0.5}>
               <SearchIconWrapper>
@@ -184,7 +204,9 @@ export default function Header({ onInputChange }: Props) {
                   </IconButton>
                 </Tooltip>
               </Box>
-              <Box sx={{ display: { xs: 'flex', md: 'none' }, color: '#FFFFFF' }}>
+              <Box
+                sx={{ display: { xs: 'flex', md: 'none' }, color: '#FFFFFF' }}
+              >
                 <IconButton
                   size="large"
                   aria-controls={mobileMenuId}
@@ -199,7 +221,6 @@ export default function Header({ onInputChange }: Props) {
                 <SwitcheTheme />
               </Box>
             </Box>
-
           </Box>
 
           <Box pb={1} sx={{ display: { xs: 'flex', sm: 'none' } }}>

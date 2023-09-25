@@ -1,4 +1,4 @@
-import { Box, Fab } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
 import CachedIcon from '@mui/icons-material/Cached'
 interface Props {
@@ -10,16 +10,21 @@ export default function UpdateProducts({ onUpdateProducts }: Props) {
   }
   return (
     <Box>
-      <Fab
-        variant="extended"
-        size="small"
-        color="primary"
+      <Button
+        sx={{
+          display: { xs: 'flex', sm: 'flex' },
+          color: '#696969',
+          borderRadius: 5,
+          textTransform: 'none',
+        }}
+        variant="outlined"
+        size="medium"
+        color={'inherit'}
         onClick={handleUpdateProducts}
-        style={{ textTransform: 'none' }}
       >
         <CachedIcon style={{ marginRight: '10px' }} />
         Atualizar produtos
-      </Fab>
+      </Button>
     </Box>
   )
 }
