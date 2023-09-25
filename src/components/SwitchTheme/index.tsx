@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormGroup from '@mui/material/FormGroup'
+import { FormGroup, FormControlLabel } from '@mui/material'
 import Switch from '@mui/material/Switch'
 import { styled } from '@mui/material/styles'
+import { useTheme } from '@/contexts/themeContext'
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -53,11 +53,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }))
 
 export default function SwitcheTheme() {
+  const { toggleTheme } = useTheme()
   return (
     <FormGroup>
       <FormControlLabel
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-        label
+        label={<></>}
+        onClick={toggleTheme}
       />
     </FormGroup>
   )

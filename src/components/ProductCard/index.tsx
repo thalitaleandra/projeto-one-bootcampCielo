@@ -1,86 +1,171 @@
 import {
-  Card,
+  Box,
+  Rating,
+  Card as CardBase,
   Typography,
-  Link,
-  CardOverflow,
   CardContent,
-  Button,
-  AspectRatio,
-} from '@mui/joy'
-import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward'
-import { Box, Rating } from '@mui/material'
+  CardActionArea,
+  Chip,
+} from '@mui/material'
+import { useState } from 'react'
 import Image from 'next/image'
+import Modal from '@/components/Modal'
+import useCart from '@/hooks/useCart'
+import { styled } from '@mui/material/styles'
+import { Product, WithContext } from 'schema-dts'
+import IProduct from '@/interfaces/IProduct'
 
-interface IProductCard {
-  name: string
-  image: string
-  price: number
-  rating: number
-  category: string
+const Card = styled(CardBase)(({ theme }) => ({
+  width: 300,
+  borderRadius: 20,
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? theme.palette.secondary.dark
+      : theme.palette.secondary.light,
+}))
+
+interface ItemProps {
+  itemCard: IProduct
+  isActive?: boolean
+  isModalOpen: boolean
+  handleClickOpen: (cardIndex: number) => void
+  handleClose: () => void
+  cardIndex: number
 }
 
 export default function ProductCard({
-  name,
-  image,
-  category,
-  price,
-  rating,
-}: IProductCard) {
-  const addToCart = () => {
-    console.log('item added to cart')
+  itemCard,
+  isActive,
+  isModalOpen,
+  handleClickOpen,
+  handleClose,
+  cardIndex,
+}: ItemProps) {
+  const { addItemToCart, removeCartItem } = useCart()
+  const [quantity, setQuantity] = useState(1)
+
+  function handleIncrease() {
+    setQuantity((state) => state + 1)
+  }
+  function handleDecrease() {
+    setQuantity((state) => state - 1)
+  }
+  function handleAddToCart() {
+    const itemToAdd = {
+      ...itemCard,
+      quantity,
+    }
+    addItemToCart(itemToAdd)
+  }
+  function handleRemove() {
+    removeCartItem(itemCard.id)
+  }
+
+  const jsonLd: WithContext<Product> = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    productID: itemCard.id,
+    name: itemCard.name,
+    image: itemCard.avatar,
+    description: itemCard.description,
+    category: itemCard.category,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: itemCard.rating,
+    },
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      price: itemCard.price,
+      priceCurrency: 'BRL',
+    },
   }
 
   return (
-    <Card sx={{ width: 320, maxWidth: '100%', boxShadow: 'lg' }}>
-      <CardOverflow>
-        <AspectRatio sx={{ minWidth: 200 }}>
-          <Image
-            src={image}
-            layout="fill"
-            alt={`Representação do produto ${name}`}
-          />
-        </AspectRatio>
-      </CardOverflow>
-      <CardContent>
-        <Typography level="body-xs">Produto em {category}</Typography>
-        <Link
-          href="#product-card"
-          fontWeight="md"
-          color="neutral"
-          textColor="text.primary"
-          overlay
-          endDecorator={<ArrowOutwardIcon />}
-        >
-          {name}
-        </Link>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-        <Typography
-          level="body-sm"
-          endDecorator={
-            <Rating
-              name="read-only"
-              value={rating}
-              readOnly
-              precision={0.1}
-              size="small"
+      <Card elevation={isActive ? 5 : 1}>
+        <CardActionArea onClick={() => handleClickOpen(cardIndex)}>
+          <Box sx={{ position: 'relative', height: '200px' }}>
+            <Image
+              alt={`Representação do produto ${itemCard.name}`}
+              src={itemCard.avatar}
+              fill
+              sizes="(min-width: 808px) 50vw, 100vw"
+              style={{
+                objectFit: 'cover',
+              }}
             />
-          }
-        >
-          {rating}
-        </Typography>
+          </Box>
 
-        <Box sx={{ display: 'flex', gap: '5px', alignItems: 'baseline' }}>
-          <Typography level="h3" sx={{ mt: 1, fontWeight: 'xl' }}>
-            R$ {price}
-          </Typography>
-          <Typography level="body-sm">à vista</Typography>
-        </Box>
-      </CardContent>
-      <CardOverflow>
-        <Button variant="solid" size="lg" onClick={addToCart}>
-          Add to cart
-        </Button>
-      </CardOverflow>
-    </Card>
+          <CardContent sx={{ height: '200px' }}>
+            <Chip
+              label={itemCard?.category?.toLowerCase()}
+              color="primary"
+              size="small"
+              sx={{ opacity: '0.8', fontSize: '0.8em' }}
+            />
+            <Typography sx={{ fontWeight: 500 }} variant="h6" component="h5">
+              {itemCard.name}
+            </Typography>
+
+            <Box
+              mt={1}
+              display={'flex'}
+              flexDirection={'row'}
+              alignItems={'center'}
+              gap={1}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {itemCard.rating}
+              </Typography>
+
+              <Rating
+                name="read-only"
+                value={itemCard.rating}
+                readOnly
+                precision={0.1}
+                size="small"
+              />
+            </Box>
+
+            <Box
+              mt={1}
+              display={'flex'}
+              flexDirection={'row'}
+              alignItems={'baseline'}
+              gap={1}
+            >
+              <Typography
+                variant="h5"
+                color="text.primary"
+                sx={{ fontWeight: 700 }}
+              >
+                R$ {itemCard.price}
+              </Typography>
+
+              <Typography>à vista</Typography>
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+
+      {isActive && (
+        <Modal
+          open={isModalOpen}
+          handleClose={handleClose}
+          handleAddToCart={handleAddToCart}
+          handleRemove={handleRemove}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+          quantity={quantity}
+          product={itemCard}
+        />
+      )}
+    </>
   )
 }

@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ada Ecommerce
 
-## Getting Started
+Esse projeto foi desenvolvido durante o Bootcamp Ada+Cielo 2023, utilizando Next.js (React, TypeScript) e o framework de estilos Material-UI.
 
-First, run the development server:
+## 🔨 Funcionalidades do projeto
+- Interface com dois temas: Dark e Light, com opção de escolha dinâmica pelo usuário.
+- Lista de produtos retornados da API, com as seguintes informações para cada item: imagem, nome, preço, categoria e avaliação.
+- Ao clicar em um item, um modal é aberto, exibindo todas as informações do produto e um campo editável para adicionar a quantidade desejada ao pedido.
+  - Possibilidade de navegar entre os produtos usando as setas do teclado (direita e esquerda) no modal.
+  - Botões "adicionar" e "remover" no modal para ajustar a quantidade do pedido.
+- Ao adicionar um item, um carrinho de compras é exibido com um badge mostrando a quantidade de itens adicionados ao pedido.
+  - Os dados do pedido são persistidos no navegador do cliente.
+- Barra superior com campo de pesquisa para buscar produtos na API.
+  - Botão "atualizar" para recarregar a lista de produtos.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## 🧰 Stack Tecnológica
+- Next.js
+- React
+- TypeScript
+- Material-UI
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏃‍♀️ Executando o Projeto
+Para abrir e rodar o projeto, siga os passos abaixo:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Instale as dependências:
+  ```bash
+    npm install
+  ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. Crie e configure o arquivo `.env` seguindo o template do arquivo `.env.example` e coloque a url da API. Você pode fazer isso manualmente ou executar o seguinte comando e preencher as variáveis de ambiente conforme necessário:
+  ```bash
+    cp .env.example .env
+  ```
 
-## Learn More
+3. Inicie o servidor de desenvolvimento:
+  ```bash
+    npm run dev
+  ```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 Design System
+- [Figma: Material-UI v.1 by Fively (Cópia)](https://www.figma.com/file/iJsu1HirhuyuEMvTLIE4xI/Material-UI-v.1-by-Fively-(Copy)?type=design&node-id=0-1&mode=design)
+- [Material-UI](https://mui.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy 🚀
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Webapp: Em construção.
+- API: [https://ada-cielo-api.vercel.app/](https://ada-cielo-api.vercel.app/)
 
-## Deploy on Vercel
+## 📚 Histórico do projeto
+- Na primeira etapa do bootcamp, definimos e dividimos as tarefas utilizando a metodologia ágil Kanban e a ferramenta Trello. O grupo foi composto por Thalita Leandra, Samuel Teixeira e Lília Paula. Além disso, começamos a montar a interface do projeto usando o Figma.
+- Nas aulas subsequentes, seguimos com o desenvolvimento do projeto, implementando funcionalidades e refinando a interface.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👥 Grupo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| [![Thalita Leandra](https://avatars.githubusercontent.com/u/52637455?s=160)](https://github.com/thalitaleandra) | [![Samuel Teixeira](https://avatars.githubusercontent.com/u/91707483?s=160)](https://github.com/samuelmteixeira) | [![Lília Paula](https://avatars.githubusercontent.com/u/25871372?s=160)](https://github.com/Lilia10010) |
+|:---:|:---:|:---:|
+| [Thalita Leandra](https://github.com/thalitaleandra) | [Samuel Teixeira](https://github.com/samuelmteixeira) | [Lília Paula](https://github.com/Lilia10010) |
+
+
+## Saiba Mais 📚
+
+Para aprender mais sobre o Next.js, confira os seguintes recursos:
+
+- [Documentação do Next.js](https://nextjs.org/docs) - aprenda sobre os recursos e a API do Next.js.
+- [Aprenda Next.js](https://nextjs.org/learn) - um tutorial interativo do Next.js.
