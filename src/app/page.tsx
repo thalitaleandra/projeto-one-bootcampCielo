@@ -1,22 +1,29 @@
 'use client'
 
-import { Box, Button, CircularProgress, Grid } from '@mui/material'
+import { Box, Button, CircularProgress, Grid, Drawer } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 import FilterSidebar from '@/components/FilterSidebar'
 import Header from '@/components/Header'
 import Pagination from '@/components/Pagination'
 import ProductCard from '@/components/ProductCard'
-import UpdateProducts from '@/components/UpdateProducts'
 import useKeyboardNavigation from '@/hooks/useKeyboardNavigation'
 import useModal from '@/hooks/useModal'
 import useProducts from '@/hooks/useProducts'
+import FilterAltIcon from '@mui/icons-material/FilterAlt'
+import UpdateProducts from '@/components/UpdateProducts'
 
 export default function Home() {
+  const [openDrawer, setOpenDrawer] = useState(false)
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpenDrawer(newOpen)
+  }
+
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(10)
-  const [totalPage, setTotalPage] = useState(100)
+  const [perPage] = useState(10)
+  const [totalPage] = useState(100)
   const [categories, setCategories] = useState<string[]>([])
 
   const [priceRange, setPriceRange] = useState<number[]>([])
@@ -84,11 +91,11 @@ export default function Home() {
     <>
       <Header onInputChange={handleInputChange} />
       <Box p={4}>
-        <Box mb={5} display="flex" justifyContent="flex-end">
-          <UpdateProducts onUpdateProducts={() => refetch()} />
-        </Box>
-        <Box display={'flex'} mt={5}>
-          <Box display="flex" flexDirection="column">
+        <Box display={'flex'}>
+          <Box
+            sx={{ display: { xs: 'none', sm: 'flex' } }}
+            flexDirection="column"
+          >
             <FilterSidebar
               onPriceChange={(priceRange: number[]) => {
                 setPriceRange(priceRange)
@@ -104,6 +111,7 @@ export default function Home() {
             />
             <Button onClick={handleClearFilters}>Limpar filtros</Button>
           </Box>
+
           <Box component={'main'} flex={1} sx={{ flexGrow: 1 }}>
             {isFetching ? (
               <Box
@@ -117,8 +125,34 @@ export default function Home() {
               </Box>
             ) : (
               <>
+                <Box
+                  mb={5}
+                  display="flex"
+                  justifyContent={{ xs: 'center', sm: 'flex-end' }}
+                  gap={2}
+                >
+                  <Button
+                    sx={{
+                      display: { xs: 'flex', sm: 'none' },
+                      color: '#696969',
+                      borderRadius: 5,
+                      textTransform: 'none',
+                    }}
+                    onClick={toggleDrawer(true)}
+                    variant="outlined"
+                    size="medium"
+                    color={'inherit'}
+                  >
+                    <FilterAltIcon />
+                    Filtrar
+                  </Button>
+
+                  <UpdateProducts onUpdateProducts={() => refetch()} />
+                </Box>
+
                 <Grid
                   container
+                  flex={1}
                   rowSpacing={3}
                   columnSpacing={4}
                   justifyContent="center"
@@ -147,6 +181,24 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
+
+      <Drawer anchor={'right'} open={openDrawer} onClose={toggleDrawer(false)}>
+        <Box sx={{ width: '300px' }} px={2} py={4} flexDirection="column">
+          <FilterSidebar
+            onPriceChange={(priceRange: number[]) => {
+              setPriceRange(priceRange)
+            }}
+            onRatingChange={(rating: number) => {
+              setRating(rating)
+            }}
+            onCategoryChange={(category: string) => {
+              categories.includes(category)
+                ? setCategories(categories.filter((cat) => cat !== category))
+                : setCategories([...categories, category])
+            }}
+          />
+        </Box>
+      </Drawer>
     </>
   )
 }

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { alpha, styled } from '@mui/material/styles'
 
-import AppBar from '@mui/material/AppBar'
+import BaseAppBar from '@mui/material/AppBar'
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
@@ -18,20 +18,58 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import useCart from '@/hooks/useCart'
 import { Tooltip } from '@mui/material'
+import Image from 'next/image'
+import logoText from '@/assets/img/logo-text.png'
 
-const Search = styled('div')(({ theme }) => ({
+const AppBar = styled(BaseAppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary.main,
+}))
+
+const Search = styled(Box)(({ theme }) => ({
   position: 'relative',
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? alpha(theme.palette.common.white, 0.15)
+      : alpha(theme.palette.common.white, 0.9),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? alpha(theme.palette.common.white, 0.25)
+        : theme.palette.common.white,
   },
   marginRight: theme.spacing(2),
+  display: 'none',
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
+    display: 'flex',
   },
+  [theme.breakpoints.up('md')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+    minWidth: '400px',
+  },
+  borderRadius: 5,
+}))
+
+const SearchMobile = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? alpha(theme.palette.common.white, 0.15)
+      : alpha(theme.palette.common.white, 0.9),
+  '&:hover': {
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? alpha(theme.palette.common.white, 0.25)
+        : theme.palette.common.white,
+  },
+  display: 'flex',
+  marginLeft: 0,
+  width: '100%',
+  borderRadius: 5,
 }))
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -46,6 +84,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
+  flex: 1,
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -109,62 +148,96 @@ export default function Header({ onInputChange }: Props) {
   )
 
   return (
-    <Box>
+    <>
       <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+        <Toolbar sx={{ display: 'block', flexDirection: 'column' }}>
+          <Box
+            py={1}
+            flex={1}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
           >
-            Ada Ecommerce
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar produtos..."
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={handleInput}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box>
-            <Tooltip title="Limpar carrinho">
-              <IconButton onClick={cleanCart} color="inherit">
-                <AssignmentTurnedInIcon />
-              </IconButton>
-            </Tooltip>
+            <Box display={'flex'} gap={1} alignItems={'baseline'}>
+              <Image
+                src={logoText}
+                height={40}
+                width={65}
+                alt="Logo da Ada tech"
+              />
+              <Typography
+                variant="h6"
+                noWrap
+                component="h1"
+                color="primary"
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+              >
+                Ecommerce
+              </Typography>
+            </Box>
+
+            <Search my={0.5}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar produtos..."
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={handleInput}
+              />
+            </Search>
+
+            <Box display={'flex'} alignItems={'center'}>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box>
+                <Tooltip title="Limpar carrinho">
+                  <IconButton onClick={cleanCart} sx={{ color: '#FFFFFF' }}>
+                    <AssignmentTurnedInIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+
+              <Box>
+                <Tooltip title="Ver carrinho">
+                  <IconButton size="large" sx={{ color: '#FFFFFF' }}>
+                    <Badge badgeContent={cartQuantity} color="error">
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Box
+                sx={{ display: { xs: 'flex', md: 'none' }, color: '#FFFFFF' }}
+              >
+                <IconButton
+                  size="large"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <SwitcheTheme />
+              </Box>
+            </Box>
           </Box>
 
-          <Box>
-            <Tooltip title="Ver carrinho">
-              <IconButton size="large" color="inherit">
-                <Badge badgeContent={cartQuantity} color="error">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <SwitcheTheme />
+          <Box pb={1} sx={{ display: { xs: 'flex', sm: 'none' } }}>
+            <SearchMobile>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar produtos..."
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={handleInput}
+              />
+            </SearchMobile>
           </Box>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-    </Box>
+    </>
   )
 }
